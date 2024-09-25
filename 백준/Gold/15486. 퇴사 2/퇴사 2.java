@@ -1,41 +1,29 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Main{
-	
-	public static void main(String[] args) throws IOException {
+public class Main {
+
+	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int N = Integer.parseInt(br.readLine());
-		
-		String[] s;
-		int p, d;
-		List<int[]>[] list = new ArrayList[N+1];
-		for (int i = 1; i <= N; i++) {
-			list[i] = new ArrayList<>();
+		int n = Integer.parseInt(br.readLine());
+		int dp[] = new int[n + 1];
+		int t[] = new int[n];
+		int p[] = new int[n];
+		for (int i = 0; i < n; i++) {
+			String tp[] = br.readLine().trim().split(" ");
+			t[i] = Integer.parseInt(tp[0]);
+			p[i] = Integer.parseInt(tp[1]);
 		}
-		
-		for (int i = 0; i < N; i++) {
-			s = br.readLine().split(" ");
-			d = Integer.parseInt(s[0]);
-			p = Integer.parseInt(s[1]);
-			
-			if (i+d > N) continue;
-			list[i+d].add(new int[] {d, p});
-		}
-		
-		int[] res = new int[N+1];
-		int max = 0;
-		for (int i = 1; i <= N; i++) {
-			res[i] = max;
-			for (int[] a : list[i]) {
-				res[i] = Math.max(res[i], res[i-a[0]]+a[1]);
+		for (int i = 0; i < n; i++) {
+			//날짜가 n을 넘어갈경우 체크
+			int day = i + t[i];
+			if (day <= n) {
+				//지금 이익 vs 기존 이익 + 얻을 이익
+				dp[day] = Math.max(dp[day], dp[i] + p[i]);
 			}
-			max = res[i];
+			//지금까지의 최대 이익 계산
+			dp[i + 1] = Math.max(dp[i + 1], dp[i]);
 		}
-		
-		System.out.println(max);
+		System.out.println(dp[n]);
 	}
 }
