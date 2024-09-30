@@ -19,32 +19,32 @@ public class Main {
 			for (int j = 0; j < M; j++) {
 				tomato[i][j] = Integer.parseInt(s[j]);
 				if (tomato[i][j] == 1) {
-					queue.offer(new int[] {i, j, 0});
+					queue.offer(new int[] {i, j});
 				} else if (tomato[i][j] == 0) cnt++;
 			}
 		}
-		if (queue.isEmpty()) {
-			System.out.println(cnt == 0 ? 0 : -1);
-			return;
-		}
 		
 		int[][] d = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
-		while (true) {
-			int[] tmp = queue.poll();
+		int day = -1;
+		while (!queue.isEmpty()) {
+			int size = queue.size();
 			
-			for (int i = 0; i < 4; i++) {
-				int nr = tmp[0] + d[i][0];
-				int nc = tmp[1] + d[i][1];
-				if (nr < 0 || nr >= N || nc < 0 || nc >= M || tomato[nr][nc] != 0) continue;
-				tomato[nr][nc] = 1;
-				cnt--;
-				queue.offer(new int[] {nr, nc, tmp[2]+1});
-			}
+			day++;
 			
-			if (queue.isEmpty()) {
-				System.out.println(cnt == 0 ? tmp[2] : -1);
-				return;
+			while (size-- > 0) {
+				int[] tmp = queue.poll();
+				
+				for (int i = 0; i < 4; i++) {
+					int nr = tmp[0] + d[i][0];
+					int nc = tmp[1] + d[i][1];
+					if (nr < 0 || nr >= N || nc < 0 || nc >= M || tomato[nr][nc] != 0) continue;
+					tomato[nr][nc] = 1;
+					cnt--;
+					queue.offer(new int[] {nr, nc});
+				}
 			}
 		}
+		
+		System.out.println(cnt == 0 ? day : -1);
 	}
 }
