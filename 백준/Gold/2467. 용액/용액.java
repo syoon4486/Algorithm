@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -17,7 +16,6 @@ public class Main {
 			list[i] = Integer.parseInt(st.nextToken());
 		}
 
-		Arrays.sort(list);
 		int left = 0, right = list.length-1;
 
 		int min = Integer.MAX_VALUE;
@@ -29,9 +27,9 @@ public class Main {
 				res1 = list[left];
 				res2 = list[right];
 				min = Math.abs(tmp);
+                if (tmp == 0) break;
 			}
 
-			if (tmp == 0) break;
 			else if (tmp > 0) right--;
 			else left++;
 		}
