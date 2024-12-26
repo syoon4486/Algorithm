@@ -1,9 +1,6 @@
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
 	static int n, m, r;
@@ -11,18 +8,13 @@ public class Main {
 	static int[][] graph;
 	static int max;
 
-	static class Road implements Comparable<Road>{
+	static class Road{
 		int end;
 		int distance;
 
 		public Road(int end, int distance) {
 			this.end = end;
 			this.distance = distance;
-		}
-
-		@Override
-		public int compareTo(Road o) {
-			return o.distance - this.distance;
 		}
 	}
 
@@ -63,7 +55,7 @@ public class Main {
 		Arrays.fill(dist, 20);
 		dist[start] = 0;
 
-		PriorityQueue<Road> pq = new PriorityQueue<Road>();
+		Queue<Road> pq = new LinkedList<>();
 		pq.offer(new Road(start, 0));
 
 		while (!pq.isEmpty()) {
