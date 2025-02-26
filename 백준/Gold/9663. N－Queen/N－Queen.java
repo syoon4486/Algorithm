@@ -13,6 +13,7 @@ public class Main {
 
         N = Integer.parseInt(br.readLine());
         queen = new int[N];
+        Arrays.fill(queen, -1);
 
         NQueen(0);
         System.out.println(cnt);
@@ -25,19 +26,21 @@ public class Main {
         }
 
         for (int i = 0; i < N; i++) {
-            queen[depth] = i;
-            if (possible(depth)) {
-                NQueen(depth+1);
-            }
-        }
-    }
+            if (queen[i] >= 0) continue;
 
-    static public boolean possible(int i) {
-        for (int j = 0; j < i; j++) {
-            if (queen[j] == queen[i] || Math.abs(j - i) == Math.abs(queen[j] - queen[i])) {
-                return false;
+            boolean flag = false;
+            for (int j = 0; j < N; j++) {
+                if (queen[j] < 0) continue;
+                if (((j - i) == (queen[j] - depth)) || ((j - i) == -(queen[j] - depth))) {
+                    flag = true;
+                    break;
+                }
             }
+            if (flag) continue;
+
+            queen[i] = depth;
+            NQueen(depth+1);
+            queen[i] = -1;
         }
-        return true;
     }
 }
